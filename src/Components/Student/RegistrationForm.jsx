@@ -30,6 +30,16 @@ export default class RegistrationForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        this.setState({
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        gender: '',
+        countries: '',
+        phoneNumber: '',
+        email: ''
+
+        })
     }
 
     handleChange = (e) => {
