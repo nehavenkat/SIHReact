@@ -24,7 +24,7 @@ export default class RegistrationForm extends Component {
         countries: '',
         phoneNumber: '',
         email: '',
-        //newsLetter: false
+        newsLetter: false
     }
 
     onSubmit = (e) => {
@@ -44,7 +44,13 @@ export default class RegistrationForm extends Component {
 
     handleChange = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    handleCheckBox = (e) => {
+        this.setState({
+            newsLetter: !this.state.newsLetter
         })
     }
     render() {
@@ -153,11 +159,14 @@ export default class RegistrationForm extends Component {
                                 </div>
                                 <div className="col-md-6 text-left">
                                     <FormControlLabel
-                                        control={<Checkbox name="checked" className="ml-4 mt-1" color="primary" />}
+                                        control={<Checkbox 
+                                            //name="checked" 
+                                            className="ml-4 mt-1" 
+                                            color="primary" />}
                                         label="Receive Newsletter"
                                         name="newLetters"
-                                    // value={this.state.newsLetter}
-                                    // onChange={e =>this.handleChange(e)}
+                                    value={this.state.newsLetter}
+                                    onChange={e =>this.handleCheckBox(e)}
                                     />
                                 </div>
                             </div>
