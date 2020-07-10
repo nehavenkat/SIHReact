@@ -121,27 +121,29 @@ export default class RegistrationForm extends Component {
 
                             <div className={"row mt-4"}>
                                 <div className="col-md-6">
-                                    <FormControl
+                                    <FormControl>
+                                        <DropDownCountriesForm 
                                         type="countries"
-                                        value={this.state.countries}
-                                        onChange={e => this.handleChange(e)}>
-                                        <DropDownCountriesForm />
+                                        value={this.props.countries}
+                                        onChange={e => this.handleChange(e)}/>
                                     </FormControl>
                                 </div>
                                 <div className="col-md-6">
                                     <FormControl
                                         variant="outlined-basic"
-                                        name="phoneNumber"
+                                       // name="phoneNumber"
                                         type="number"
                                         value={this.state.phoneNumber}
-                                         onChange={e => this.handleChange(e)}
+                                        
                                     >
                                         <PhoneInput
+                                         name="phoneNumber"
                                             country={'dk'}
                                             inputProps={{
                                                 label: 'Phone',
                                                 required: true,
                                             }}
+                                 onChange={phoneNumber => this.setState({ phoneNumber })}
                                         />
                                     </FormControl>
                                 </div>
@@ -157,7 +159,17 @@ export default class RegistrationForm extends Component {
                                             onChange={e => this.handleChange(e)} />
                                     </FormControl>
                                 </div>
-                                <div className="col-md-6 text-left">
+                                <div className="col-md-6">
+                                    <FormControl variant="outlined">
+                                        <TextField id="outlined-basic"
+                                            label="E-mail"
+                                            variant="outlined"
+                                            name="email"
+                                            value={this.state.email}
+                                            onChange={e => this.handleChange(e)} />
+                                    </FormControl>
+                                </div>
+                                <div className="text-left">
                                     <FormControlLabel
                                         control={<Checkbox 
                                             //name="checked" 
