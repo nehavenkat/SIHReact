@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import RegistrationForm from './Components/Student/RegistrationForm';
+import WelcomePage from './Components/WelcomePage';
 
 function App() {
   return (
+   
     <div className="App">
-      <RegistrationForm/>
-
+      <WelcomePage/>
     </div>
+   
   );
 }
 export default App;

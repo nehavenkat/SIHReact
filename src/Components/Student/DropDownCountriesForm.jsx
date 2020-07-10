@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 
 function countryToFlag(isoCode) {
-    return typeof String.fromCodePoint !== 'undefined'
+   return typeof String.fromCodePoint !== 'undefined'
         ? isoCode
             .toUpperCase()
             .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
@@ -26,6 +26,15 @@ const useStyles = makeStyles({
 export default function CountrySelect() {
     const classes = useStyles();
 
+    // state = {
+    //     countries: '',
+    // }
+
+    // handleChange = (e) => {
+    //     this.setState({
+    //         [e.target.name]: e.target.value,
+    //     })
+    // }
     return (
         <Autocomplete
             id="country-select-demo"
@@ -44,6 +53,9 @@ export default function CountrySelect() {
             )}
             renderInput={(params) => (
                 <TextField
+                // type="countries"
+                // value={this.state.countries}
+                // onChange={e => this.handleChange(e)}
                     {...params}
                     label="Choose a country"
                     variant="outlined"
