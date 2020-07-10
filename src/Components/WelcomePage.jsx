@@ -9,13 +9,13 @@ export default class WelcomePage extends Component {
     <div className="container">     
       <Jumbotron>
         <h1 className="display-3">Welcome to SIH</h1>
-        <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
+        <p className="lead">Collaborate with the next generation of Impact-Driven Changemakers</p>
         <hr className="my-2" />
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p>Want to be a part of an innovation student-driven community?</p>
+        <p>SignUp and join like-minded Impact-Driven Students and receive invitations to engagging activities</p>
         <p>
         <Link to="/RegistrationForm" className="mr-3 btn btn-danger">Create an Account</Link>
         <Link to="/SignUp" className="btn btn-outline-danger">SIGN UP</Link>
-       
         </p>
       </Jumbotron>
     </div>
