@@ -15,7 +15,7 @@ export default class WelcomePage extends Component {
         <p>SignUp and join like-minded Impact-Driven Students and receive invitations to engagging activities</p>
         <p>
         <Link to="/RegistrationForm" className="mr-3 btn btn-danger">Create an Account</Link>
-        <Link to="/SignUp" className="btn btn-outline-danger">SIGN UP</Link>
+        <Link to="/LoginPage" className="btn btn-outline-danger">SIGN IN</Link>
         </p>
       </Jumbotron>
     </div>
