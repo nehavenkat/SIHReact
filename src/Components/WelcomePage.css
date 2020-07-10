@@ -1,0 +1,8 @@
+.container{
+    margin: auto;
+    display: flex;
+   padding:25px; 
+}
+.jumbotron{
+    background-color:white !important;
+    }
