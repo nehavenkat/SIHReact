@@ -24,6 +24,7 @@ export default class RegistrationForm extends Component {
         countries: '',
         phoneNumber: '',
         email: '',
+        password:'',
         newsLetter: false
     }
 
@@ -37,8 +38,8 @@ export default class RegistrationForm extends Component {
         gender: '',
         countries: '',
         phoneNumber: '',
-        email: ''
-
+        email: '',
+        password:''
         })
     }
 
@@ -59,6 +60,7 @@ export default class RegistrationForm extends Component {
             <div>
                 <div className="container">
                     <div className="studentRegistrationBox">
+                        <h2>Create Account</h2>
                         <form noValidate autoComplete="off">
                             <div className={"row mt-4"}>
                                 <div className={"col-md-6"}>
@@ -162,14 +164,17 @@ export default class RegistrationForm extends Component {
                                 <div className="col-md-6">
                                     <FormControl variant="outlined">
                                         <TextField id="outlined-basic"
-                                            label="E-mail"
+                                            label="Password"
                                             variant="outlined"
-                                            name="email"
-                                            value={this.state.email}
+                                            name="password"
+                                            type="password"
+                                            value={this.state.password}
                                             onChange={e => this.handleChange(e)} />
                                     </FormControl>
                                 </div>
-                                <div className="text-left">
+                                </div>
+                                <div className="row mt-4  mb-4">
+                                <div className="col text-left">
                                     <FormControlLabel
                                         control={<Checkbox 
                                             //name="checked" 
