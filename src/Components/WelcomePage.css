@@ -1,13 +1,16 @@
 .container{
     margin: auto;
-    text-align: center;
+    text-align: center !important;
     display: flex;
+    flex-direction: column;
+    justify-content: right;
    padding:25px; 
 }
+
 .jumbotron{
     background-color:white !important;
     }
-    /* p {
+p {
         text-align: center;
-        }    */
+        }   
     
