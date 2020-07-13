@@ -1,209 +1,181 @@
 
-import React, { Component } from 'react';
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/material.css'
-import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import DropDownCountriesForm from "../Student/DropDownCountriesForm";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
-import "../Student/RegistrationForm.css"
+import React, { Component } from "react";
+import "../Student/RegistrationForm.css";
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
 
-export default class RegistrationForm extends Component {
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
 
-    state = {
-        firstName: '',
-        lastName: '',
-        dateOfBirth: '',
-        gender: '',
-        countries: '',
-        phoneNumber: '',
-        email: '',
-        password:'',
-        newsLetter: false
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+
+  return valid;
+};
+
+class RegistrationForm extends Component {
+  constructor(props) {
+    super(props);
+
+    
+    // state = {
+    //     firstName: '',
+    //     lastName: '',
+    //     dateOfBirth: '',
+    //     gender: '',
+    //     countries: '',
+    //     phoneNumber: '',
+    //     email: '',
+    //     password: '',
+    //     newsLetter: false
+    // }
+
+    this.state = {
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+    //   dateOfBirth: '',
+    //   gender: '',
+    //   countries: '',
+    //   phoneNumber: '',
+      formErrors: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      }
+    };
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if (formValid(this.state)) {
+      console.log(`
+        --SUBMITTING--
+        First Name: ${this.state.firstName}
+        Last Name: ${this.state.lastName}
+        Email: ${this.state.email}
+        Password: ${this.state.password}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    }
+  };
+
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "firstName":
+        formErrors.firstName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "lastName":
+        formErrors.lastName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "email":
+        formErrors.email = emailRegex.test(value)
+          ? ""
+          : "invalid email address";
+        break;
+      case "password":
+        formErrors.password =
+          value.length < 6 ? "minimum 6 characaters required" : "";
+        break;
+      default:
+        break;
     }
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state);
-        this.setState({
-        firstName: '',
-        lastName: '',
-        dateOfBirth: '',
-        gender: '',
-        countries: '',
-        phoneNumber: '',
-        email: '',
-        password:''
-        })
-    }
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+  };
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
+  render() {
+    const { formErrors } = this.state;
 
-    handleCheckBox = (e) => {
-        this.setState({
-            newsLetter: !this.state.newsLetter
-        })
-    }
-    render() {
-
-        return (
-            <div>
-                <div className="container">
-                    <div className="studentRegistrationBox">
-                        <h2>Create Account</h2>
-                        <form noValidate autoComplete="off">
-                            <div className={"row mt-4"}>
-                                <div className={"col-md-6"}>
-                                    <TextField
-                                        id="outlined-basic"
-                                        label="First Name"
-                                        type="text"
-                                        name="firstName"
-                                        novalidation
-                                        variant="outlined"
-                                        value={this.state.firstName}
-                                        onChange={e => this.handleChange(e)}
-                                    />
-                                </div>
-                                <div className={"col-md-6"}>
-                                    <TextField
-                                        id="outlined-basic"
-                                        label="Last Name"
-                                        variant="outlined"
-                                        type="text"
-                                        name="lastName"
-                                        value={this.state.lastName}
-                                        onChange={e => this.handleChange(e)}
-                                    />
-                                </div>
-                            </div>
-                            <div className={"row mt-3"}>
-                                <div className={"col-md-6"}>
-                                    <TextField variant="outlined"
-                                        id="Birthday"
-                                        label="Date of birth"
-                                        type="date"
-                                        name="dateOfBirth"
-                                        value={this.state.dateOfBirth}
-                                        onChange={e => this.handleChange(e)}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                </div>
-                                <div className={"col-md-6"}>
-                                    <FormControl variant="outlined" >
-                                        <InputLabel id="outlined-basic">Gender</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-outlined-label"
-                                            id="outlined-basic"
-                                            label="Gender"
-                                            name="gender"
-                                            value={this.state.gender}
-                                            onChange={e => this.handleChange(e)}>
-                                            <MenuItem value="">
-                                            </MenuItem>
-                                            <MenuItem value={"Male"}>Male</MenuItem>
-                                            <MenuItem value={"Female"}>Female</MenuItem>
-                                            <MenuItem value={"Other"}>Other</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </div>
-                            </div>
-
-                            <div className={"row mt-4"}>
-                                <div className="col-md-6">
-                                    <FormControl>
-                                        <DropDownCountriesForm 
-                                        type="countries"
-                                        value={this.props.countries}
-                                        onChange={e => this.handleChange(e)}/>
-                                    </FormControl>
-                                </div>
-                                <div className="col-md-6">
-                                    <FormControl
-                                        variant="outlined-basic"
-                                       // name="phoneNumber"
-                                        type="number"
-                                        value={this.state.phoneNumber}
-                                        
-                                    >
-                                        <PhoneInput
-                                         name="phoneNumber"
-                                            country={'dk'}
-                                            inputProps={{
-                                                label: 'Phone',
-                                                required: true,
-                                            }}
-                                 onChange={phoneNumber => this.setState({ phoneNumber })}
-                                        />
-                                    </FormControl>
-                                </div>
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col-md-6">
-                                    <FormControl variant="outlined">
-                                        <TextField id="outlined-basic"
-                                            label="E-mail"
-                                            variant="outlined"
-                                            name="email"
-                                            value={this.state.email}
-                                            onChange={e => this.handleChange(e)} />
-                                    </FormControl>
-                                </div>
-                                <div className="col-md-6">
-                                    <FormControl variant="outlined">
-                                        <TextField id="outlined-basic"
-                                            label="Password"
-                                            variant="outlined"
-                                            name="password"
-                                            type="password"
-                                            value={this.state.password}
-                                            onChange={e => this.handleChange(e)} />
-                                    </FormControl>
-                                </div>
-                                </div>
-                                <div className="row mt-4  mb-4">
-                                <div className="col text-left">
-                                    <FormControlLabel
-                                        control={<Checkbox 
-                                            //name="checked" 
-                                            className="ml-4 mt-1" 
-                                            color="primary" />}
-                                        label="Receive Newsletter"
-                                        name="newLetters"
-                                    value={this.state.newsLetter}
-                                    onChange={e =>this.handleCheckBox(e)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row mt-4 mb-4">
-                                <div className="col text-left ml-4">
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={(e) => this.onSubmit(e)}
-                                    >
-                                        Submit
-                                </Button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    return (
+      <div className="wrapper">
+        <div className="form-wrapper">
+          <h1>Create Account</h1>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="firstName">
+              <label htmlFor="firstName">First Name</label>
+              <input
+                className={formErrors.firstName.length > 0 ? "error" : null}
+                placeholder="First Name"
+                type="text"
+                name="firstName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.firstName.length > 0 && (
+                <span className="errorMessage">{formErrors.firstName}</span>
+              )}
             </div>
-
-
-        );
-    }
+            <div className="lastName">
+              <label htmlFor="lastName">Last Name</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="Last Name"
+                type="text"
+                name="lastName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.lastName.length > 0 && (
+                <span className="errorMessage">{formErrors.lastName}</span>
+              )}
+            </div>
+            <div className="email">
+              <label htmlFor="email">Email</label>
+              <input
+                className={formErrors.email.length > 0 ? "error" : null}
+                placeholder="Email"
+                type="email"
+                name="email"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.email.length > 0 && (
+                <span className="errorMessage">{formErrors.email}</span>
+              )}
+            </div>
+            <div className="password">
+              <label htmlFor="password">Password</label>
+              <input
+                className={formErrors.password.length > 0 ? "error" : null}
+                placeholder="Password"
+                type="password"
+                name="password"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.password.length > 0 && (
+                <span className="errorMessage">{formErrors.password}</span>
+              )}
+            </div>
+            <div className="loginAccount">
+              <button type="submit" className="mr-3 btn btn-danger">Create Account</button>
+              <small>Already Have an Account?</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
+
+export default RegistrationForm;
